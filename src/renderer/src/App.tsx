@@ -1,8 +1,7 @@
-import { Header } from "./components/header"
+import { Main } from "./components/main"
 import { SideBar } from "./components/side-bar"
 import {
   ResizableHandle,
-  ResizablePanel,
   ResizablePanelGroup,
 } from "./components/ui/resizable"
 import "./global.css"
@@ -11,28 +10,11 @@ export function App() {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-screen w-screen"
+      className="min-h-screen w-screen bg-rotion-900 text-rotion-50"
     >
-      <ResizablePanel
-        defaultSize={25}
-        minSize={10}
-      >
-        <SideBar />
-      </ResizablePanel>
-
-      <ResizableHandle />
-
-      <ResizablePanel
-        defaultSize={75}
-        minSize={20}
-      >
-        <Header />
-        <main
-          className="flex-1 flex items-center justify-center text-rotion-400"
-        >
-          Selecione ou crie um ducumento
-        </main>
-      </ResizablePanel>
+      <SideBar />
+      <ResizableHandle className="bg-rotion-500 active:bg-zinc-400" />
+      <Main />
     </ResizablePanelGroup>
   )
 }

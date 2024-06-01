@@ -1,6 +1,13 @@
+import {  ResizablePanel } from "../components/ui/resizable"
+
 export const SideBar = () => {
-    
+
     return (
-        <div>side-bar</div>
+        <ResizablePanel
+            defaultSize={25}
+            minSize={10}
+        >
+            <div className="w-full region-drag">side-bar</div>
+        </ResizablePanel>
     )
 }

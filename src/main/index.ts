@@ -10,12 +10,13 @@ function createWindow() {
     show: true,
     autoHideMenuBar: true,
     backgroundColor: "#17141f",
-    titleBarStyle: "hidden",
+    icon: resolve(__dirname, "icon.ico"),
+    titleBarStyle: "customButtonsOnHover",
     trafficLightPosition: {
       x: 20,
       y: 20
     },
-    ...(process.platform === "linux" ? { icon } : { icon }),
+    ...(process.platform === "linux" ? { icon } : { }),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
