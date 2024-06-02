@@ -1,14 +1,25 @@
-import { Link } from "react-router-dom"
+import { TocLink, TocRoot, TocSection } from "../components/ToC"
 
 export const Document = () => {
     return (
         <main
-            className="flex-1 flex items-center justify-center text-rotion-400"
+            className="flex-1 flex py-12 px-10 gap-8"
         >
-            Document
-            <Link to={"/"}>
-                Acessar black
-            </Link>
+            <aside className="hidden lg:block sticky top-0">
+                <span className="text-rotion-300 font-semibold text-lg">
+                    TABLE OF CONTENT
+                </span>
+
+                <TocRoot>
+                    <TocLink>Back-end</TocLink>
+                    <TocSection>
+                        <TocLink>Banco de dados</TocLink>
+                        <TocLink>Autenticação</TocLink>
+                    </TocSection>
+                </TocRoot>
+            </aside>
+
+            <section className="flex-1 flex flex-col"></section>
         </main>
     )
 }

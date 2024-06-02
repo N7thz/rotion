@@ -28,7 +28,7 @@ export const SideBar = () => {
                     </span>
                 </div>
                 <div className="p-3">
-                    <h1 className="text-muted-foreground mb-3">
+                    <h1 className="text-rotion-300 mb-3">
                         WORKSPACE
                     </h1>
                     <ul className="space-y-2">

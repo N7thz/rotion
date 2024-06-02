@@ -9,6 +9,7 @@ import {
     BreadcrumbSeparator
 } from "./ui/breadcrumb"
 import { Button } from "./ui/button"
+import { Link } from "react-router-dom"
 
 export const Header = () => {
 
@@ -20,13 +21,13 @@ export const Header = () => {
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <a
-                                href="/"
+                            <Link
+                                to="/"
                                 className="flex gap-2 items-center"
                             >
                                 <CodeXml color="red" />
                                 Estrutura técnica
-                            </a>
+                            </Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
@@ -36,9 +37,9 @@ export const Header = () => {
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <a href="/docs/components">
+                            <Link to="/docs/components">
                                 Back-end
-                            </a>
+                            </Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
