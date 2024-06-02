@@ -1,6 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain } from "electron"
 import { join, resolve } from "node:path"
 import { electronApp, optimizer, is } from "@electron-toolkit/utils"
+import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import icon from "../../resources/icon.png"
 
 function createWindow() {
@@ -11,12 +12,12 @@ function createWindow() {
     autoHideMenuBar: true,
     backgroundColor: "#17141f",
     icon: resolve(__dirname, "icon.ico"),
-    titleBarStyle: "customButtonsOnHover",
+    titleBarStyle: "hiddenInset",
     trafficLightPosition: {
       x: 20,
       y: 20
     },
-    ...(process.platform === "linux" ? { icon } : { }),
+    ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
@@ -32,10 +33,17 @@ function createWindow() {
     return { action: "deny" }
   })
 
+  const devServerURL = createURLRoute("http://localhost:5173", "main")
+
+  const fileRoute = createFileRoute(
+    join(__dirname, '../renderer/index.html'),
+    "main"
+  )
+
   if (is.dev && process.env.ELECTRON_RENDERER_URL) {
-    mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
+    mainWindow.loadURL(devServerURL)
   } else {
-    mainWindow.loadFile(join(__dirname, "../renderer/index.html"))
+    mainWindow.loadFile(...fileRoute)
   }
 }
 
@@ -59,6 +67,7 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit()
