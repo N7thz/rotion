@@ -1,4 +1,4 @@
-import { CodeXml, Trash } from "lucide-react"
+import { ChevronsRight, CodeXml, Trash } from "lucide-react"
 import {
     Breadcrumb,
     BreadcrumbEllipsis,
@@ -10,13 +10,31 @@ import {
 } from "./ui/breadcrumb"
 import { Button } from "./ui/button"
 import { Link } from "react-router-dom"
+import { useCollapse } from "../context/collapse-context"
 
 export const Header = () => {
+
+    const { isCollapsible, panelRef } = useCollapse()
+
+    const handleExpand = () => {
+
+        if (panelRef.current) {
+
+            panelRef.current.expand()
+        }
+    }
 
     return (
         <header
             className="region-drag border-b border-rotion-400 px-3 py-2 flex justify-between items-center"
         >
+            {
+                isCollapsible &&
+                <Button onClick={handleExpand} size={"icon"}>
+                    <ChevronsRight />
+                </Button>
+            }
+
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>

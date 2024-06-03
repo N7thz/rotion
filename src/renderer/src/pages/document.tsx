@@ -1,4 +1,5 @@
 import { TocLink, TocRoot, TocSection } from "../components/ToC"
+import { Editor } from "../components/editor"
 
 export const Document = () => {
     return (
@@ -19,7 +20,9 @@ export const Document = () => {
                 </TocRoot>
             </aside>
 
-            <section className="flex-1 flex flex-col"></section>
+            <section className="flex-1 flex flex-col">
+                <Editor />
+            </section>
         </main>
     )
 }

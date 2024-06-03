@@ -1,18 +1,47 @@
 import { Plus, Search } from "lucide-react"
 import { ResizablePanel } from "../components/ui/resizable"
 import { Button } from "./ui/button"
+import { ChevronsLeft } from "lucide-react"
+import { useCollapse } from "../context/collapse-context"
+import { useRef } from "react"
+import { ImperativePanelHandle } from "react-resizable-panels"
 
 export const SideBar = () => {
 
     const options = ["Unititled", "Discover", "Ignite", "Rocketseat"]
 
+    const { setIsCollapsible } = useCollapse()
+
+    const panelRef = useRef<ImperativePanelHandle>()
+
+    const handleExpand = () => {
+
+        if (panelRef.current) {
+
+            panelRef.current.collapse()
+        }
+    }
+
     return (
+
         <ResizablePanel
+            ref={panelRef}
+            collapsible
+            collapsedSize={0}
             defaultSize={25}
-            minSize={10}
+            onCollapse={() => setIsCollapsible(true)}
+            onExpand={() => setIsCollapsible(false)}
             className="flex flex-col justify-between"
         >
             <div className="space-y-4">
+                <div
+                    className="w-full flex items-center justify-end"
+                >
+                    <Button onClick={handleExpand} size={"icon"}>
+                        <ChevronsLeft />
+                    </Button>
+                </div>
+
                 <Button
                     className="w-full region-drag flex items-center justify-start gap-3 p-3 bg-transparent"
                 >
@@ -47,6 +76,7 @@ export const SideBar = () => {
                         }
                     </ul>
                 </div>
+
             </div>
             <Button
                 className="w-full rounded-none bg-transparent justify-start gap-3 hover:bg-transparent border-t border-rotion-400"
@@ -56,6 +86,6 @@ export const SideBar = () => {
                     Create new page
                 </span>
             </Button>
-        </ResizablePanel>
+        </ResizablePanel >
     )
 }
