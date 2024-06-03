@@ -17,11 +17,7 @@ export const Header = () => {
     const { isCollapsible, panelRef } = useCollapse()
 
     const handleExpand = () => {
-
-        if (panelRef.current) {
-
-            panelRef.current.expand()
-        }
+        if (panelRef.current) panelRef.current.expand()
     }
 
     return (
@@ -30,7 +26,11 @@ export const Header = () => {
         >
             {
                 isCollapsible &&
-                <Button onClick={handleExpand} size={"icon"}>
+                <Button
+                    size={"icon"}
+                    onClick={handleExpand}
+                    className="bg-transparent"
+                >
                     <ChevronsRight />
                 </Button>
             }

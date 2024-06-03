@@ -3,23 +3,16 @@ import { ResizablePanel } from "../components/ui/resizable"
 import { Button } from "./ui/button"
 import { ChevronsLeft } from "lucide-react"
 import { useCollapse } from "../context/collapse-context"
-import { useRef } from "react"
-import { ImperativePanelHandle } from "react-resizable-panels"
 
 export const SideBar = () => {
 
     const options = ["Unititled", "Discover", "Ignite", "Rocketseat"]
 
-    const { setIsCollapsible } = useCollapse()
+    const { setIsCollapsible, panelRef } = useCollapse()
 
-    const panelRef = useRef<ImperativePanelHandle>()
+    const handleCollapse = () => {
 
-    const handleExpand = () => {
-
-        if (panelRef.current) {
-
-            panelRef.current.collapse()
-        }
+        if (panelRef.current) panelRef.current.collapse()
     }
 
     return (
@@ -27,7 +20,6 @@ export const SideBar = () => {
         <ResizablePanel
             ref={panelRef}
             collapsible
-            collapsedSize={0}
             defaultSize={25}
             onCollapse={() => setIsCollapsible(true)}
             onExpand={() => setIsCollapsible(false)}
@@ -35,9 +27,13 @@ export const SideBar = () => {
         >
             <div className="space-y-4">
                 <div
-                    className="w-full flex items-center justify-end"
+                    className="w-full flex items-center justify-end p-2"
                 >
-                    <Button onClick={handleExpand} size={"icon"}>
+                    <Button
+                        size={"icon"}
+                        onClick={handleCollapse}
+                        className="bg-transparent"
+                    >
                         <ChevronsLeft />
                     </Button>
                 </div>
@@ -45,7 +41,10 @@ export const SideBar = () => {
                 <Button
                     className="w-full region-drag flex items-center justify-start gap-3 p-3 bg-transparent"
                 >
-                    <Search size={28} className="bg-rotion-700 p-2 rounded-sm" />
+                    <Search
+                        size={28}
+                        className="bg-rotion-700 p-2 rounded-sm"
+                    />
                     <span>
                         Fazer login
                     </span>
@@ -70,7 +69,11 @@ export const SideBar = () => {
                                     <span>
                                         {option}
                                     </span>
-                                    ...
+                                    <Button
+                                        variant="ghost" className="hover:bg-transparent hover:scale-125 hover:text-white duration-200"
+                                    >
+                                        ...
+                                    </Button>
                                 </li>
                             )
                         }
