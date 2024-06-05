@@ -1,7 +1,37 @@
-import { TocLink, TocRoot, TocSection } from "../components/ToC"
-import { Editor } from "../components/editor"
+import { TocLink, TocRoot, TocSection } from "@/components/ToC"
+import { Editor } from "@/components/editor"
+import { useQuery } from "@tanstack/react-query"
+import { useMemo } from "react"
+import { useParams } from "react-router-dom"
 
 export const Document = () => {
+
+    const { id } = useParams<{ id: string }>()
+
+    console.log(id)
+
+    const { data, isFetching } = useQuery({
+        queryKey: ["document"],
+        queryFn: async () => {
+
+            const response = await window.api.fetchDocuments({ id: id! })
+
+            return response.data
+        },
+    })
+
+    console.log("dados",data)
+
+    const initialContent = useMemo(() => {
+
+        if (data) {
+            return `<h1>${data.title}${data.content ?? <p />}</h1>`
+        }
+
+        return ""
+
+    }, [data])
+
     return (
         <main
             className="flex-1 flex py-12 px-10 gap-8"
@@ -12,16 +42,19 @@ export const Document = () => {
                 </span>
 
                 <TocRoot>
-                    <TocLink>Back-end</TocLink>
+                    <TocLink to={"#"}>Back-end</TocLink>
                     <TocSection>
-                        <TocLink>Banco de dados</TocLink>
-                        <TocLink>Autenticação</TocLink>
+                        <TocLink to={"#"}>Banco de dados</TocLink>
+                        <TocLink to={"#"}>Autenticação</TocLink>
                     </TocSection>
                 </TocRoot>
             </aside>
 
             <section className="flex-1 flex flex-col">
-                <Editor />
+                {
+                    !isFetching && data &&
+                    <Editor content={initialContent} />
+                }
             </section>
         </main>
     )

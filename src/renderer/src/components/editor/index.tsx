@@ -18,10 +18,14 @@ import {
 
 import { BubbleButton } from "../bubble-button"
 
-import header from "../../resources/header.png"
-import text from "../../resources/text.png"
+import header from "@/resources/header.png"
+import text from "@/resources/text.png"
 
-export const Editor = () => {
+interface EditorProps {
+    content: string
+}
+
+export const Editor = ({ content }: EditorProps) => {
 
     const editor = useEditor({
         extensions: [
@@ -38,8 +42,7 @@ export const Editor = () => {
                 emptyEditorClass: "before:content-[attr(data-placeholder)] before:text-gray-500 brfore:h-0 before:float-left before:pointer-events-none"
             }),
         ],
-        content:
-            "<h1>Back-end</h1><p>Esse é um documento que explica sobre back-end</p>",
+        content,
         autofocus: "end",
         editorProps: {
             attributes: {
@@ -97,7 +100,7 @@ export const Editor = () => {
         <>
             <EditorContent
                 editor={editor}
-                className="w-[65ch]"
+                className="w-[60ch]"
             />
             {
                 editor &&

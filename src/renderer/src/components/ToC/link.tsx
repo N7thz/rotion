@@ -1,18 +1,21 @@
 import { ComponentProps } from "react"
-import { Link } from "react-router-dom"
-import { cn } from "../../lib/utils"
+import { NavLink, NavLinkProps } from "react-router-dom"
+import { cn } from "@/lib/utils"
 
-interface TocLinkPros extends ComponentProps<"a"> {
-    link?: string
-}
+interface TocLinkPros extends NavLinkProps { }
 
-export const TocLink = ({ link, className, ...props }: TocLinkPros) => {
+export const TocLink = ({ to, className, ...props }: TocLinkPros) => {
     return (
-        <Link
-            to={link ?? "/"}
-            className={
-                cn("block text-zinc-50/80 hover:text-zinc-50", className)
-            }
+        <NavLink
+            to={to}
+            className={({ isActive }) => {
+                return cn(
+                    "block text-zinc-50/80 hover:text-zinc-50"
+                    ,
+                    { "bg-rotion-700": isActive }
+                    , className
+                )
+            }}
             {...props}
         />
     )

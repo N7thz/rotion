@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom"
-import { SideBar } from "../../components/side-bar"
+import { SideBar } from "../../components/sidebar"
 import { Header } from "../../components/header"
 import {
     ResizableHandle,

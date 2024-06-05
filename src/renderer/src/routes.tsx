@@ -16,7 +16,7 @@ export function Routes() {
                         element={<Blank />}
                     />
                     <Route
-                        path="/document"
+                        path="/documents/:id"
                         element={<Document />}
                     />
                 </Route>

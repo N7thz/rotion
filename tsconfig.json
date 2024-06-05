@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "strict": false,
+    "strict": true,
     "target": "ESNext",
     "lib": [
       "ESNext",
@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": [
-        "./*"
+        "./src/*"
       ],
       "@/*": [
         "./src/renderer/src/*"
@@ -31,6 +31,7 @@
   },
   "include": [
     "src",
+    "src/preload/index.d.ts",
     "electron.vite.config.*"
   ],
   "exclude": [

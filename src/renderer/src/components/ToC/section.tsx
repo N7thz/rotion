@@ -1,5 +1,5 @@
 import { ComponentProps } from "react"
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 export const TocSection = ({ className, ...porps }: ComponentProps<"span">) => {
     return (

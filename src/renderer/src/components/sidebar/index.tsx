@@ -1,12 +1,14 @@
 import { Plus, Search } from "lucide-react"
-import { ResizablePanel } from "../components/ui/resizable"
-import { Button } from "./ui/button"
+import { ResizablePanel } from "../ui/resizable"
+import { Button } from "../ui/button"
 import { ChevronsLeft } from "lucide-react"
-import { useCollapse } from "../context/collapse-context"
+import { useCollapse } from "@/context/collapse-context"
+import { useQuery } from "@tanstack/react-query"
+import { Document } from "~/shared/types"
+import { CreateDocument } from "./create-document"
+import { TocLink } from "../ToC"
 
 export const SideBar = () => {
-
-    const options = ["Unititled", "Discover", "Ignite", "Rocketseat"]
 
     const { setIsCollapsible, panelRef } = useCollapse()
 
@@ -15,9 +17,22 @@ export const SideBar = () => {
         if (panelRef.current) panelRef.current.collapse()
     }
 
+    const { data } = useQuery({
+        queryKey: ["documents"],
+        queryFn: async () => {
+
+            const response = await window.api.fetchAllDocuments()
+
+            console.log(response)
+
+            return response.data
+        }
+    })
+
     return (
 
         <ResizablePanel
+            // @ts-ignore
             ref={panelRef}
             collapsible
             defaultSize={25}
@@ -59,36 +74,41 @@ export const SideBar = () => {
                     <h1 className="text-rotion-300 mb-3">
                         WORKSPACE
                     </h1>
-                    <ul className="space-y-2">
-                        {
-                            options.map(option =>
-                                <li
-                                    key={option}
-                                    className="w-full flex justify-between text-zinc-50/80 cursor-pointer"
-                                >
-                                    <span>
-                                        {option}
-                                    </span>
-                                    <Button
-                                        variant="ghost" className="hover:bg-transparent hover:scale-125 hover:text-white duration-200"
-                                    >
-                                        ...
-                                    </Button>
-                                </li>
+                    <ul className="space-y-1">
+                        {data &&
+                            data.map(document =>
+                                <SideBarItem
+                                    key={document.id}
+                                    document={document}
+                                />
                             )
                         }
                     </ul>
                 </div>
 
             </div>
-            <Button
-                className="w-full rounded-none bg-transparent justify-start gap-3 hover:bg-transparent border-t border-rotion-400"
-            >
-                <Plus />
-                <span>
-                    Create new page
-                </span>
-            </Button>
+            <CreateDocument />
         </ResizablePanel >
+    )
+}
+
+export const SideBarItem = (
+    { document: { id, title } }: { document: Document }
+) => {
+
+    return (
+        <TocLink
+            to={`/documents/${id}`}
+            className="w-full flex justify-between text-zinc-50/80 items-center cursor-pointer"
+        >
+            <span>
+                {title}
+            </span>
+            <Button
+                variant="ghost" className="hover:bg-transparent hover:scale-125 hover:text-white duration-200"
+            >
+                ...
+            </Button>
+        </TocLink>
     )
 }
