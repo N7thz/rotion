@@ -1,35 +1,67 @@
-import { TocLink, TocRoot, TocSection } from "@/components/ToC"
-import { Editor } from "@/components/editor"
-import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
+import { TocLink, TocRoot, TocSection } from "@/components/ToC"
+import { Editor } from "~/renderer/src/components/editor"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
+
+interface OnContentUpdateParams {
+    title: string
+    content: string
+}
+
+interface IPCDocument {
+    id: string
+}
 
 export const Document = () => {
 
+    const queryClient = useQueryClient()
+
     const { id } = useParams<{ id: string }>()
 
-    console.log(id)
-
     const { data, isFetching } = useQuery({
-        queryKey: ["document"],
+        queryKey: ["document", id],
         queryFn: async () => {
 
-            const response = await window.api.fetchDocuments({ id: id! })
+            const response = await window.api.fetchDocument({ id: id! })
+
+            console.log(response.data)
 
             return response.data
         },
+        refetchOnWindowFocus: false
     })
 
-    console.log("dados",data)
+    const { mutateAsync: saveDocument } = useMutation({
+        mutationFn: async ({ content, title }: OnContentUpdateParams) => {
+
+            await window.api.saveDocument({
+                id: id!,
+                title,
+                content
+            })
+        },
+        onSuccess: (_, { title }) => {
+            queryClient.setQueryData(
+                ["documents"],
+                (documents: IPCDocument[]) => {
+                    return documents.map(document => {
+                        if (document.id) {
+                            return {...document, title}
+                        }
+                    })
+                }
+            )
+        }
+    })
 
     const initialContent = useMemo(() => {
 
-        if (data) {
-            return `<h1>${data.title}${data.content ?? <p />}</h1>`
+        if (!data) {
+            return "<p />"
         }
 
-        return ""
-
+        return `<h1>${data.title}</h1>${data.content ?? "<p />"}`
     }, [data])
 
     return (

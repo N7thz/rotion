@@ -32,7 +32,7 @@ export const CreateDocument = () => {
         >
             <Plus />
             <span>
-                Create new page
+                Criar novo documento
             </span>
         </Button>
     )

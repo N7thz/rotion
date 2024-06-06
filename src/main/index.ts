@@ -2,9 +2,10 @@ import { app, shell, BrowserWindow, ipcMain } from "electron"
 import { join, resolve } from "node:path"
 import { electronApp, optimizer, is } from "@electron-toolkit/utils"
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
-import icon from "../renderer/src/resources/icon.png"
+import icon from "../../resources/icon.png"
 import "./ipc"
 import "./store"
+import "./tray"
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -13,7 +14,6 @@ function createWindow() {
     show: true,
     autoHideMenuBar: true,
     backgroundColor: "#17141f",
-    icon: resolve(__dirname, "icon.ico"),
     titleBarStyle: "hiddenInset",
     trafficLightPosition: {
       x: 20,

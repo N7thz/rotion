@@ -16,7 +16,7 @@ import {
     MessageSquareText
 } from "lucide-react"
 
-import { BubbleButton } from "../bubble-button"
+import { BubbleButton } from "./bubble-button"
 
 import header from "@/resources/header.png"
 import text from "@/resources/text.png"
@@ -51,7 +51,7 @@ export const Editor = ({ content }: EditorProps) => {
         }
     })
 
-    const handleChangeForBold = () => {
+    function handleChangeForBold() {
 
         editor && editor
             .chain()
@@ -60,7 +60,7 @@ export const Editor = ({ content }: EditorProps) => {
             .run()
     }
 
-    const handleChangeForItalic = () => {
+    function handleChangeForItalic() {
 
         editor && editor
             .chain()
@@ -69,7 +69,7 @@ export const Editor = ({ content }: EditorProps) => {
             .run()
     }
 
-    const handleChangeForStrike = () => {
+    function handleChangeForStrike() {
 
         editor && editor
             .chain()
@@ -78,7 +78,7 @@ export const Editor = ({ content }: EditorProps) => {
             .run()
     }
 
-    const handleChangeForCode = () => {
+    function handleChangeForCode() {
 
         editor && editor
             .chain()
@@ -87,7 +87,7 @@ export const Editor = ({ content }: EditorProps) => {
             .run()
     }
 
-    const handleChangeForHeader = () => {
+    function handleChangeForHeader() {
 
         editor && editor
             .chain()
@@ -102,12 +102,11 @@ export const Editor = ({ content }: EditorProps) => {
                 editor={editor}
                 className="w-[60ch]"
             />
-            {
+            {/* {
                 editor &&
                 <FloatingMenu
                     editor={editor}
-                    className="bg-rotion-900 flex flex-col ga-2 shadow-xl border-zinc-50
-                    shadow-black/20 rounded-md overflow-hidden"
+                    className="bg-rotion-900 flex flex-col ga-2 shadow-xl border-zinc-50 shadow-black/20 rounded-md overflow-hidden"
                     shouldShow={({ state }) => {
 
                         const { $from } = state.selection
@@ -120,7 +119,7 @@ export const Editor = ({ content }: EditorProps) => {
                     <button
                         onClick={handleChangeForHeader}
                         className="flex items-center gap-2 p-2 rounded 
-                        hover:bg-rotion-800 min-w-[280-px]"
+                    hover:bg-rotion-800 min-w-[280-px]"
                     >
                         <img
                             src={text}
@@ -141,7 +140,7 @@ export const Editor = ({ content }: EditorProps) => {
 
                     <button
                         className="flex items-center gap-2 p-2 rounded 
-                        hover:bg-rotion-800 min-w-[280-px]"
+                    hover:bg-rotion-800 min-w-[280-px]"
                     >
                         <img
                             src={header}
@@ -160,13 +159,13 @@ export const Editor = ({ content }: EditorProps) => {
                         </div>
                     </button>
                 </FloatingMenu>
-            }
-            {
+            } */}
+            {/* {
                 editor &&
                 <BubbleMenu
                     editor={editor}
                     className="bg-rotion-800 flex shadow-xl border-rotion-500
-                        shadow-black/20 rounded-sm overflow-hidden divide-x divide-rotion-500"
+                    shadow-black/20 rounded-sm overflow-hidden divide-x divide-rotion-500"
                 >
 
                     <BubbleButton>
@@ -210,7 +209,11 @@ export const Editor = ({ content }: EditorProps) => {
                         </BubbleButton>
                     </div>
                 </BubbleMenu>
-            }
+            } */}
         </>
     )
 }
+
+{/* 
+
+*/}

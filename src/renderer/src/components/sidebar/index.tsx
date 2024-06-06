@@ -1,16 +1,19 @@
-import { Plus, Search } from "lucide-react"
-import { ResizablePanel } from "../ui/resizable"
-import { Button } from "../ui/button"
+import { Search } from "lucide-react"
 import { ChevronsLeft } from "lucide-react"
 import { useCollapse } from "@/context/collapse-context"
 import { useQuery } from "@tanstack/react-query"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { Document } from "~/shared/types"
 import { CreateDocument } from "./create-document"
 import { TocLink } from "../ToC"
+import { Button } from "../ui/button"
+import { ResizablePanel } from "../ui/resizable"
 
 export const SideBar = () => {
 
     const { setIsCollapsible, panelRef } = useCollapse()
+
+    const [parent] = useAutoAnimate()
 
     const handleCollapse = () => {
 
@@ -38,7 +41,7 @@ export const SideBar = () => {
             defaultSize={25}
             onCollapse={() => setIsCollapsible(true)}
             onExpand={() => setIsCollapsible(false)}
-            className="flex flex-col justify-between"
+            className="flex flex-col justify-between transition-all"
         >
             <div className="space-y-4">
                 <div
@@ -74,7 +77,10 @@ export const SideBar = () => {
                     <h1 className="text-rotion-300 mb-3">
                         WORKSPACE
                     </h1>
-                    <ul className="space-y-1">
+                    <ul
+                        ref={parent}
+                        className="space-y-1"
+                    >
                         {data &&
                             data.map(document =>
                                 <SideBarItem
