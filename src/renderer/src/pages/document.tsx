@@ -25,11 +25,8 @@ export const Document = () => {
 
             const response = await window.api.fetchDocument({ id: id! })
 
-            console.log(response.data)
-
             return response.data
         },
-        refetchOnWindowFocus: false
     })
 
     const { mutateAsync: saveDocument } = useMutation({
@@ -65,9 +62,7 @@ export const Document = () => {
     }, [data])
 
     return (
-        <main
-            className="flex-1 flex py-12 px-10 gap-8"
-        >
+        <main className="flex-1 flex py-12 px-10 gap-8">
             <aside className="hidden lg:block sticky top-0">
                 <span className="text-rotion-300 font-semibold text-lg">
                     TABLE OF CONTENT

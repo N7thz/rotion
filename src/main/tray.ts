@@ -1,20 +1,40 @@
-import { Menu, Tray, app } from "electron"
+import { BrowserWindow, Menu, Tray } from "electron"
 import { resolve } from "node:path"
 
-app.whenReady()
-    .then(() => {
+export function createTray(window: BrowserWindow) {
 
-        const tray = new Tray(resolve("resources", "iconTemplate.png" ))
+    const tray = new Tray(resolve("resources", "iconTemplate.png"))
 
         const menu = Menu.buildFromTemplate([
             { label: "Rotion", enabled: false },
             { type: "separator", },
-            { type: "checkbox", label: "Ativvar modo dark"  },
-            { label: "Rotion", },
-            { label: "Rotions", },
-            { label: "Rotion", },
+            {
+                label: "Criar novo documento",
+                click: () => {
+                    window.webContents.send("new-document")
+                }
+            },
+            { type: "separator", },
+            {
+                label: "Documentos recentes",
+                enabled: false,
+            },
+            {
+                label: "Dicover",
+                accelerator: "CommandOrControl+1",
+                acceleratorWorksWhenHidden: false
+            },
+            {
+                label: "Untitled",
+                accelerator: "CommandOrControl+2",
+                acceleratorWorksWhenHidden: false
+            },
+            {
+                label: "Sair",
+                role: "quit",
+                accelerator: "Alt+F4",
+            }
         ])
 
         tray.setContextMenu(menu)
-    })
-    .catch(err => console.log(err))
+}

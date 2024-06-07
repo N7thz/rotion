@@ -1,5 +1,4 @@
-import { Search } from "lucide-react"
-import { ChevronsLeft } from "lucide-react"
+import { ChevronsLeft, Search, User } from "lucide-react"
 import { useCollapse } from "@/context/collapse-context"
 import { useQuery } from "@tanstack/react-query"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
@@ -8,10 +7,11 @@ import { CreateDocument } from "./create-document"
 import { TocLink } from "../ToC"
 import { Button } from "../ui/button"
 import { ResizablePanel } from "../ui/resizable"
+import { SearchBar } from "../search-bar"
 
 export const SideBar = () => {
 
-    const { setIsCollapsible, panelRef } = useCollapse()
+    const { setIsCollapsible, panelRef, setIsOpenSerch } = useCollapse()
 
     const [parent] = useAutoAnimate()
 
@@ -25,8 +25,6 @@ export const SideBar = () => {
         queryFn: async () => {
 
             const response = await window.api.fetchAllDocuments()
-
-            console.log(response)
 
             return response.data
         }
@@ -43,6 +41,7 @@ export const SideBar = () => {
             onExpand={() => setIsCollapsible(false)}
             className="flex flex-col justify-between transition-all"
         >
+            <SearchBar />
             <div className="space-y-4">
                 <div
                     className="w-full flex items-center justify-end p-2"
@@ -59,7 +58,7 @@ export const SideBar = () => {
                 <Button
                     className="w-full region-drag flex items-center justify-start gap-3 p-3 bg-transparent"
                 >
-                    <Search
+                    <User
                         size={28}
                         className="bg-rotion-700 p-2 rounded-sm"
                     />
@@ -67,12 +66,15 @@ export const SideBar = () => {
                         Fazer login
                     </span>
                 </Button>
-                <div className="w-full flex items-center gap-3 p-3">
+                <Button
+                    onClick={() => setIsOpenSerch(true)} 
+                    className="w-full flex items-center justify-start gap-3 p-3 bg-transparent hover:bg-rotion-800"
+                >
                     <Search size={20} />
                     <span>
                         Busca rápida
                     </span>
-                </div>
+                </Button>
                 <div className="p-3">
                     <h1 className="text-rotion-300 mb-3">
                         WORKSPACE

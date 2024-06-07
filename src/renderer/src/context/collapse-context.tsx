@@ -1,4 +1,4 @@
-"use client"
+
 
 import {
     Dispatch,
@@ -14,8 +14,10 @@ import { ImperativePanelHandle } from "react-resizable-panels"
 
 export interface CollapseContextProps {
     panelRef: MutableRefObject<ImperativePanelHandle | undefined>
-    isCollapsible:boolean
+    isCollapsible: boolean
     setIsCollapsible: Dispatch<SetStateAction<boolean>>
+    isOpenSerch: boolean
+    setIsOpenSerch: Dispatch<SetStateAction<boolean>>
 }
 
 const CollapseContext = createContext({} as CollapseContextProps)
@@ -24,10 +26,12 @@ export const CollapseProvider = ({ children }: { children: ReactNode }) => {
 
     const panelRef = useRef<ImperativePanelHandle>()
     const [isCollapsible, setIsCollapsible] = useState<boolean>(false)
+    const [isOpenSerch, setIsOpenSerch] = useState(false)
 
     const value: CollapseContextProps = {
         panelRef,
-        isCollapsible, setIsCollapsible
+        isCollapsible, setIsCollapsible,
+        isOpenSerch, setIsOpenSerch
     }
 
     return (

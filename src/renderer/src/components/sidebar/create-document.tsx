@@ -1,11 +1,14 @@
+import { useEffect } from "react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Plus } from "lucide-react"
 import { Button } from "../ui/button"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Document } from "~/shared/types"
+import { useNavigate } from "react-router-dom"
 
 export const CreateDocument = () => {
 
     const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
     const {
         isPending: isCreatingNewDocument,
@@ -21,8 +24,23 @@ export const CreateDocument = () => {
             queryClient.setQueryData(["documents"], (documents: Document[]) => {
                 return [...documents, data]
             })
+
+            navigate(`/documents/${data.id}`)
         }
     })
+
+    useEffect(() => {
+
+        function onNewDocument() {
+            createDocument()
+        }
+
+        const unsubscribe = window.api.onNewDocumentRequest(onNewDocument)
+
+        return () => {
+            unsubscribe()
+        }
+    }, [createDocument])
 
     return (
         <Button
